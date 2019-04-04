@@ -1,0 +1,61 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+%
+\input{settings.tex}
+\maketitle
+\thispagestyle{empty}
+\cleardoublepage
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% % Empty page after title page.
+% %
+% \hbox{}\par\vfill\centerline%
+%    {THIS PAGE INTENTIONALLY LEFT BLANK}%
+%    \vfill\thispagestyle{empty}\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abstract
+%
+\begin{minipage}{\textwidth}
+  \vspace*{-6pt}
+  \begin{abstract}
+    \thispagestyle{plain}          % add page number
+    \vspace*{6pt}
+    \import{../}{abstract.tex}
+  \end{abstract}
+
+  \begin{keywords}
+    \import{../}{keywords.tex}
+  \end{keywords}
+\end{minipage}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Acknowledgement
+%
+\chapter*{Acknowledgements}
+\thispagestyle{plain}
+\addcontentsline{toc}{chapter}{\numberline{}Acknowledgements}%
+\import{../}{acknowledgments.tex}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Contents
+%
+\tableofcontents
+\thispagestyle{plain}
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Figures
+%
+
+\listoffigures
+\cleardoublepage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% List of Tables
+%
+
+\listoftables
+\cleardoublepage

@@ -1,0 +1,392 @@
+%----------------------------------------------------------------------------------------
+%
+% LaTeX-mall för examensarbeten vid LNU
+% Skapad av Marcus Wilhelmsson, Institutionen för Datavetenskap
+% Fakulteten för Teknik
+% Linnéuniversitetet
+%
+% Licens: Creative Commons
+%
+%----------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	Inställningar och dokumentkonfiguration
+%----------------------------------------------------------------------------------------
+\documentclass[a4paper,12pt]{article} % A4-sida och 12 punkters fontstorlek
+
+\usepackage[T1]{fontenc} % 8-bitarskodning som har 256 glyfer
+\usepackage{times} % Typsnitt i dokumentet
+\usepackage[english,swedish]{babel} % Engelska, svenska för extra abstract
+\usepackage[utf8]{inputenc} % För svenska tecken (UTF-8)
+\usepackage[absolute]{textpos} % Möjlighet att absolutpositionera text
+\usepackage[top=2cm, bottom=2.5cm, left=3cm, right=3cm]{geometry} % Ställ in marginaler
+\usepackage{appendix} % Stöd för separat hantering av bilagor
+\usepackage[parfill]{parskip} % Tar bort indentering vid ny rad
+\usepackage{csquotes} % Används för att hantera citat
+\usepackage{float} % Används för att placera figurer och tabeller rätt.
+%\usepackage{graphicx}
+%\usepackage{wrapfig}
+
+% Används för att texten ska hamna ovanför tabeller och för bra mellanrum.
+\floatstyle{plaintop}
+\restylefloat{table}
+\usepackage[tableposition=bottom]{caption}
+
+\setcounter{secnumdepth}{3} % Fem nivåer av underrubriksnumrering
+\setcounter{tocdepth}{3} % Fem nivåer av underrubriksnumrering i innehållsförteckning
+
+\usepackage{sectsty} % Ändra storlek på section och subsection till 12 punkter
+\sectionfont{\fontsize{14}{15}\selectfont}
+\subsectionfont{\fontsize{12}{15}\selectfont}
+\subsubsectionfont{\fontsize{12}{15}\selectfont}
+
+\usepackage{abstract}
+\renewcommand{\abstractnamefont}{\normalfont\small\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+%----------------------------------------------------------------------------------------
+%	Denna del används för att skapa boxen med författare, handledare, etc.
+%----------------------------------------------------------------------------------------
+\newsavebox{\mybox}
+\newlength{\mydepth}
+\newlength{\myheight}
+
+\newenvironment{sidebar}%
+{\begin{lrbox}{\mybox}\begin{minipage}{\textwidth}}%
+{\end{minipage}\end{lrbox}%
+ \settodepth{\mydepth}{\usebox{\mybox}}%
+ \settoheight{\myheight}{\usebox{\mybox}}%
+ \addtolength{\myheight}{\mydepth}%
+ \noindent\makebox[0pt]{\hspace{-20pt}\rule[-\mydepth]{1pt}{\myheight}}%
+ \usebox{\mybox}}
+
+%----------------------------------------------------------------------------------------
+%	Titel-sektion
+%----------------------------------------------------------------------------------------
+% Remove the author and date fields and the space associated with them
+% from the definition of maketitle!
+\makeatletter
+\renewcommand{\@maketitle}{
+\newpage
+ \null
+ \vskip 2em%
+ \begin{center}%
+  {\LARGE \@title \par}%
+ \end{center}%
+ \par} \makeatother
+
+\newcommand\BackgroundPic{
+    \put(-2,-3){
+    \includegraphics[keepaspectratio,scale=0.3]{img/lnu_etch.png} % Bakgrundsbild
+    }
+}
+\newcommand\BackgroundPicLogo{
+    \put(30,740){\includegraphics[keepaspectratio,scale=0.10]{img/logo.png}}
+}
+
+\author{
+  Leitet, Johan
+  \and
+  Lock, Mats
+}
+
+\title{
+\vspace{-8cm}
+\begin{sidebar}
+    \vspace{10cm}
+    \normalfont \normalsize
+    \huge Master's Thesis\\ % Dokumentets typ, t.ex. Examensarbete
+    \vspace{-1.3cm}
+\end{sidebar}
+\vspace{3cm}
+\begin{flushleft}
+    \huge Serverless Orchestration with AWS Step Functions\\ % Dokumentets rubrik
+    \it \large How to implement an iterator in Amazone States Language % Dokumentets underrubrik
+\end{flushleft}
+\null
+\vfill
+\begin{textblock}{6}(10,13)
+\begin{flushright}
+\begin{minipage}{\textwidth}
+\begin{flushleft} \large
+\emph{Authors:} Johan \textsc{Leitet}, Mats \textsc{Lock}\\ % Författare
+\emph{Supervisor:} Dr.~Jesper \textsc{Andersson}\\ % Handledare
+\emph{Examiner:} Dr. ~Jane \textsc{Doe}\\ % Examinator
+\emph{Semester:} Spring 2018\\ % Termin
+\emph{Subject:} Computer Science\\ % Ämne
+\emph{Level:} Second Level\\ % Nivå
+\emph{Course code:} 5DV50E, 30 credits % Kurskod
+\end{flushleft}
+\end{minipage}
+\end{flushright}
+\end{textblock}
+}
+
+\date{} % Dagens datum, tomt i detta fallet. Använd \today för dagens datum.
+
+\begin{document}
+% \AddToShipoutPicture*{\BackgroundPic} % Lägger in backgrundsbild på första sidan
+% \AddToShipoutPicture*{\BackgroundPicLogo} % Lägger in LNU-logga på första sidan
+\renewcommand{\figurename}{Figure} % Byt ut "Figure" mot "Figur".
+\renewcommand{\tablename}{Table} % Byt ut "Table" mot "Tabell".
+\renewcommand{\refname}{References} % Byt ut "References" mot "Referenser".
+\pagenumbering{gobble}
+\newgeometry{left=5cm}
+\maketitle % Skriv ut titeln
+\restoregeometry
+\clearpage
+
+%----------------------------------------------------------------------------------------
+%	Engelsk och svensk version av abstract.
+%----------------------------------------------------------------------------------------
+\pagenumbering{roman}
+\selectlanguage{english}
+\begin{abstract}
+Arcu magna dictumst et cursus? Rhoncus rhoncus eu penatibus sociis rhoncus sit. Urna nisi, amet! Eu a sit! Dignissim aliquam. Mattis! Enim. Porta enim cras placerat ut vel, odio, augue rhoncus, elementum nunc eu mattis rhoncus turpis a velit.
+
+Aenean, integer magnis magna, auctor augue nisi phasellus tincidunt nunc natoque! Cum ridiculus vel sit pellentesque mauris elementum porta.
+
+\noindent\textbf{Keywords: Microservice architecture, FaaS, Serverless, AWS Lambda}
+\end{abstract}
+\selectlanguage{english}
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	Engelsk och svensk version av förord.
+%----------------------------------------------------------------------------------------
+\textbf{\large{Acknowledgement}}\\
+
+Thanks to ourself! See ya! \newpage
+
+%----------------------------------------------------------------------------------------
+%	Innehållsförteckning
+%----------------------------------------------------------------------------------------
+\pagenumbering{gobble} % Stäng av sidnumrering för innehållsförteckningssidan
+\tableofcontents % Innehållsförteckning
+
+\newpage % Ny sida
+\pagenumbering{arabic} % Påbörja sidnumrering på 1
+
+%----------------------------------------------------------------------------------------
+%	Rubrik 1
+%----------------------------------------------------------------------------------------
+\section{Introduction}
+% \emph innebär emphasize, d.v.s. betona eller framhåll -> kursiv stil
+\quad\emph{Well, come on and let me know -
+Should I stay or should I go? - The Clash}\\
+
+ 
+%----------------------------------------------------------------------------------------
+%	Introduction to the research context
+%----------------------------------------------------------------------------------------
+\subsection{Introduction to the research context}
+
+\subsubsection{CoursePress - an outdated monolith}
+
+Since the beginning of the 2000's, computer science courses have used course sites for organizing courses. Initially, the purpose was to distribute lecture and laboratory instructions, as well as manage laboratory groups. Over time, different features were added as student forums and result reportings.
+
+In order to meet changing conditions and changing requirements, a platform, CoursePress\footnote{http://coursepress.lnu.se/about}, was created. CoursePress is based on WordPress publishing platform and a number of plugins. An important reason in the choice of letting the new platform build on WordPress was the ability to meet the requirement of openness, a way to pursue the philosophy that courses’ learning material should be open, not only to students and teachers but to the public.
+
+CoursePress, which in some respects can be said to use a N-tier architecture, relies heavily on a number of external services, such as APIs and databases provided by the university's central IT department. In the latter part of 2018, these services will be terminated and replaced fully by hollow new, which will cause CoursePress to cease to function in several aspects. As a monolithic application, CoursePress is difficult to change, a change in one part of the application may break another parts, why something new is necessary. Something new that supports continuous innovation.
+
+\subsubsection{The future of CoursePress}
+% 1 Introducera sällanprogrammerare About the authors?
+% 2 Beskriv kort vad CoursePress ska bli
+% 3 Var lite mer specifik kring händelsekedjorna
+% 4 Finns det ett bra sätt att göra detta på? Microservices, Lambda, Step functions
+
+\subsubsection{Event-driven architecture}
+% Vilka problem lämpar sig en event-driven arkitektur för? 
+% Hur står sig detta gentemot Microservices. 
+% EventDriven->Faas->Serverless Faas.
+\cite{Michelson2006}
+
+
+Knyta ihop SOA med EDA?\cite{Kong2008}
+
+\subsubsection{Microservices architecture}
+% Antar att det är här vi får ta avstamp för att sedan komma in på serverless
+
+% Avsluta med komplexiteten i MS gentemot Serverless FaaS
+
+\subsubsection{Serverless computing and Serverless Faas}
+
+% PaaS -> FaaS https://stackify.com/function-as-a-service-serverless-architecture/ via BaaS
+% FaaS servern startas för varje anrop
+% stateless (permanent lagring eller liknande behövs. -> Step Functions)
+% Ops, more than managening servers. monitoring
+Setting up a microservice can be cumbersome since the developer need to have control over parts of the infrastructure in which the services are executing. Serverless computing, often refered to as serverless applications, addresses this fact. Instead of focusing on the infrastructure, the focus is on the application. Serverless does imply that no servers are needed. This is of course not true. However, instead of the developer being responsible for managing the servers this task is left to the cloud provider. The cloud provider handles topics such as server management and scaling automatically.
+
+Serverless does not mean that no operations is needed in the developer team. Parts of operations is handled by the cloud provider, like infrastructure management and scaling, but other parts such as monitoring, deployment, security networking, production debugging and system scaling still needs to be addressed by the team. \cite{MikeRoberts2016}
+
+
+According to Amazon web services a service or a platform can be considered to be serverless if fulfilling the following capabilities\cite{Vogels2016}:
+\begin{itemize}
+\item No server management
+\item Flexible scaling
+\item High availability
+\item No idle capacity
+\end{itemize}
+
+% Pros and Cons
+
+
+Serveless computing is not a silver bullet and not suitable for every application. One reason is latency. Every triggered function in a serverless environment creates a virtualized container in which the function is executed \cite{NeilSavage2018}. Initialization times for containers varies from the order of 300 ms to seconds \cite{} with current virtualization techniques. In contrast to the microseconds execution time a well written function without side effects claims this is unacceptable for real time applications or other types of applications with low latency demands. 
+
+% Vendor control and vendor lock in effects 
+Letting your code rely on a third party introduces risk. Is system up time guarantied? Sudden changes of cost and APIs etc. \cite{MikeRoberts2016}
+If vendor specific APIs are beeing used a lock in effect ... compared to containerized applications that can be easily transfered between vendors.\cite{} 
+
+% Multitenancy problems, security
+
+However, if low latency is not an important requirement a serverless approach could be promising for the infrequent programmer or team of infrequent programmers. 
+
+% no state
+Latency to get down to ms....
+
+
+
+According to Mike Roberts at martinfowler.com\cite{MikeRoberts2016} the term \textit{serverless} is first mentioned in a\cite{Fromm2012}
+
+
+
+
+\begin{itemize}
+\item Amazon Web Services Lambda\footnote{https://aws.amazon.com/lambda/}
+\item Google Cloud Functions\footnote{https://cloud.google.com/functions/}
+\item IBM Cloud Functions\footnote{https://www.ibm.com/cloud/functions} 
+\item Microsoft Azure Functions\footnote{https://azure.microsoft.com/en-us/services/functions/}
+\end{itemize}
+
+
+% FaaS, -> lambda
+% Vi bör väl kort introducera stacken som vi tänkt utveckla på och vad som lett fram till vad vi vill undersöka.
+
+
+% AWS Lambda, Azure, Google, IBM....
+
+\subsubsection{AWS - Lambda}
+
+% -> Lambda orchestration, specifikt för AWS?....
+
+Lambda is AWS implementation of FaaS and is distinct from and should not be confused with Lambda Architecture\cite{Astakhov2015}. 
+
+
+\subsubsection{Orchastration of FaaS}
+% AWS Step Functions
+
+\subsection{Research motivation}
+% Här beskriver vi varför detta arbete skulle kunna vara intressant
+
+% Extern validitet:
+% 1 - Sällanprogrammerare, en "enkel" modell för att skapa händelsekedjor
+% 2 - 
+
+
+%----------------------------------------------------------------------------------------
+%	Aim and objectives (mål) - S
+%----------------------------------------------------------------------------------------
+\subsection{Aim and objectives}
+Taken from the problem context described in the prior section the aim of this research is presented here.
+
+\subsubsection{Aim of research}
+...
+
+\subsubsection{Objectives of research}
+...
+
+\subsection{Research questions}
+
+\begin{enumerate}
+\item RQ1 - Comparing iterations in AWS step...
+\item RQ2 - Is a serverless approach a good way for a team of infrequent programmers to...
+\end{enumerate}
+
+\subsection{Restrictions}
+
+% Generealiserat så till vida att FaaS-lagret bör gå att implementera i andra tjänster. Problemet är väl att Step Functions är unikt för AWS men vi borde kunna applicera detta på liknande state machines
+
+\subsection{Thesis structure}
+...
+
+%%%%%%%%%%%%%%%%%%%%%%% Methology %%%%%%%%%%%%%%%
+
+% lägg in en underrubrik (\subsection -> spillutrymme)
+\section{Methology}
+"The thesis is divided into five main phases; pre-study, requirement
+analysis, design, implementation and evaluation where each phase has its own
+chapter" %<- Stulet men kanske är ett bra upplägg?%
+
+\subsection{Design science research}
+DESCRIBE how to make a research with this method.
+
+\subsection{Implementing a design science research}
+
+\subsubsection{Steps}
+
+\subsection{Validation of the result}
+
+\subsection{Method discussion}
+
+\subsection{Limitations and threats to validity}
+Validity may have some problem since...
+Unexperienced, hard to generalize since the research is done i a very specific context.
+
+%%%%%%%%%%%%%%%%%%%%%%% Literature review %%%%%%%%%%%%%%%
+
+\section{Literature review}
+
+\subsection{Insights taken from literature reviews}
+The following objectives has been taken from this part of the research.
+\begin{itemize}
+\item focus på de arbeten vi hittat och de olika synvinklar
+\item Beskriv teoretiska skillnaden mellan monolit och microservice
+\item Beskriv fördelar, kopplade till problemet\cite{VaishnaviDESIGNSYSTEMS}
+\end{itemize}
+
+\newpage
+\section{Results}
+\emph{Here we will present the objectives taken from the background theory discussed in chapter 3 and use them to motivate the implemented artifact}\\
+In chapter 3 we formed a couple of steps (S1 to S5) as an structured way of approaching the research questions.
+
+\subsection{Description of the new artifact}
+
+\newpage
+\section{Analysis and discussion}
+\subsubsection{Analysis of the infrastructure}
+
+\subsubsection{Analysis of the pipeline}
+
+\subsubsection{Analysis of the workflow}
+
+\subsection{Validation}
+Using the objectives discovered in S3 and presented in chapter 4 we did evaluated the artifact...
+
+\newpage
+\section{Conclusion and future work}
+\emph{In this chapter we will present our own conclusions and suggestions to further work.}\\
+The build and tested artifact did provide some knowledge about...
+
+\subsection{Future work}
+To study this conclusion further a ....
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	Referenser
+%  IEEE-system med siffror för referenser
+%  Ändra bibliographystyle för annat referenssystem
+%----------------------------------------------------------------------------------------
+\newpage
+\bibliographystyle{IEEEtran}
+\bibliography{mendeley}
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	Bilagor, hanteras i separat fil kallad appendix
+%----------------------------------------------------------------------------------------
+\pagenumbering{Alph}
+\setcounter{page}{1} % Börjar om på sida 1 för bilagor
+\appendix
+\end{document}

@@ -1,0 +1,208 @@
+\chapter{Introduction}
+%----------------------------------------------------------------------------------------
+%	Introduction to the research context
+%----------------------------------------------------------------------------------------
+\section{Introduction to the research context}
+
+%----------------------------------------------------------------------------------------
+\subsection{CoursePress - an outdated monolith}
+
+Since the beginning of the 2000's, computer science courses have used course sites for organizing courses. Initially, the purpose was to distribute lecture and laboratory instructions, as well as manage laboratory groups. Over time, different features were added as student forums and result reporting.
+
+In order to meet changing conditions and changing requirements, a platform, CoursePress\footnote{http://coursepress.lnu.se/about}, was created. CoursePress is based on WordPress publishing platform and a number of plugins. An important reason in the choice of letting the new platform build on WordPress was the ability to meet the requirement of openness, a way to pursue the philosophy that courses’ learning material should be open, not only to students and teachers but to the public.
+
+CoursePress, which in some respects can be said to use a N-tier architecture, relies heavily on a number of external services, such as APIs and databases provided by the university's central IT department. In the latter part of 2018, these services will be terminated and replaced fully by hollow new, which will cause CoursePress to cease to function in several aspects. As a monolithic application, CoursePress is difficult to change, a change in one part of the application may break another parts, why something new is necessary. Something new upon which to achieve continuous innovation.
+
+%----------------------------------------------------------------------------------------
+\subsection{The future of CoursePress}
+
+% 1 Introducera sällanprogrammerare About the authors?
+% 2 Beskriv kort vad CoursePress ska bli
+% 3 Var lite mer specifik kring händelsekedjorna
+% 4 Finns det ett bra sätt att göra detta på? Microservices, Lambda, Step functions
+
+% continuous innovation involving small-scale and local innovation 
+
+None of the future releases of the CoursePress platform will ever be the final. The platform will continue to change over time to meet changing conditions and requirements.
+
+An important aspect is the need for the future platform to be developed by small focused teams of infrequent developers. These infrequent developers have varied preferences regarding operating systems, programming languages, development tools, etc., and those preferences may change over time.
+
+Given that the CoursePress platform, like many other computer systems, embeds significant amounts of domain knowledge, it is an advantage that the infrequent developers know the organization well, as they are part of it. This increases the prerequisites for creating appropriate domain models.\cite{OffenDomainDevelopment}
+
+Another part to consider is the management of the infrastructure of the future platform. The less the infrequent developers need to care about managing things like servers the better, because they can spend their short time on adding new features as well as managing existing features instead.
+
+By carefully selecting an architecture style for the future platform, many of the risks that can sabotage a long-term project, such as the future CoursePress platform, should be reduced. By moving from the self-hosted, outdated monolith to a system consisting of many small, independent and manageable pieces, several risks should disappear more or less and new opportunities arise.
+
+% \todo{nya platformen lyssnar på händleser -> Event-driven architecture, centrala system producerar händelser rörande studenter, future platform filterar och konsumerar dessa händelser}
+
+By using a serverless architecture style, the infrequent developers should be able to focus on the the logic that constitutes the future platform instead of worrying about managing different kinds of servers.\cite{?}
+
+% There are quite a few architecture styles to choose among, but there is a one that seems to be a bit more interesting than the others, the serverless architecture style. 
+
+\emph{Serverless can also mean applications where some amount of server-side logic is still written by the application developer but unlike traditional architectures is run in stateless compute containers that are event-triggered, ephemeral (may only last for one invocation), and fully managed by a 3rd party. (Thanks to ThoughtWorks for their definition in their most recent Tech Radar.) One way to think of this is ‘Functions as a service / FaaS’ . AWS Lambda is one of the most popular implementations of FaaS at present, but there are others. I’ll be using ‘FaaS’ as a shorthand for this meaning of Serverless throughout the rest of this article.\cite{MikeRoberts2016}}
+
+% The cloud supports event-driven async compute, function as a service (FaaS)
+
+% %----------------------------------------------------------------------------------------
+% \subsection{Event-driven architecture}
+
+% % Vilka problem lämpar sig en event-driven arkitektur för? 
+% % Hur står sig detta gentemot Microservices. 
+% % EventDriven->Faas->Serverless Faas.
+% %\cite{Michelson2006}
+% % Knyta ihop SOA med EDA?\cite{Kong2008Event-drivenEnterprises}
+
+% ...
+
+% %----------------------------------------------------------------------------------------
+% \subsection{Microservices architecture}
+
+% % Antar att det är här vi får ta avstamp för att sedan komma in på serverless
+% % Avsluta med komplexiteten i MS gentemot Serverless FaaS
+
+% ...
+
+%----------------------------------------------------------------------------------------
+\subsection{Serverless computing and Serverless Faas}
+
+% PaaS -> FaaS https://stackify.com/function-as-a-service-serverless-architecture/ via BaaS
+% FaaS servern startas för varje anrop
+% stateless (permanent lagring eller liknande behövs. -> Step Functions)
+% Ops, more than managening servers. monitoring
+
+Setting up a microservice can be cumbersome since the developer need to have control over parts of the infrastructure in which the services are executing. Serverless computing, often referred to as serverless applications, addresses this fact. Instead of focusing on the infrastructure, the focus is on the application. Serverless does imply that no servers are needed. This is of course not true. However, instead of the developer being responsible for managing the servers this task is left to the cloud provider. The cloud provider handles topics such as server management and scaling automatically.
+
+Serverless does not mean that no operations is needed in the developer team. Parts of operations is handled by the cloud provider, like infrastructure management and scaling, but other parts such as monitoring, deployment, security networking, production debugging and system scaling still needs to be addressed by the team. \cite{MikeRoberts2016}
+
+According to Amazon web services a service or a platform can be considered to be serverless if fulfilling the following capabilities\cite{Vogels2016}:
+\begin{itemize}
+\item No server management
+\item Flexible scaling
+\item High availability
+\item No idle capacity
+\end{itemize}
+
+% Pros and Cons
+
+Serverless computing is not a silver bullet and not suitable for every application. One reason is latency. Every triggered function in a serverless environment creates a virtualized container in which the function is executed \cite{NeilSavage2018}. Initialization times for containers varies from the order of 300 ms to seconds \cite{} with current virtualization techniques. In contrast to the microseconds execution time a well written function without side effects claims this is unacceptable for real time applications or other types of applications with low latency demands. 
+
+% Vendor control and vendor lock in effects 
+
+Letting your code rely on a third party introduces risk. Is system up time guarantied? Sudden changes of cost and APIs etc. \cite{MikeRoberts2016}
+If vendor specific APIs are being used a lock in effect ... compared to containerized applications that can be easily transfered between vendors.\cite{} 
+
+% Multitenancy problems, security
+
+However, if low latency is not an important requirement a serverless approach could be promising for the infrequent programmer or team of infrequent programmers. 
+
+% no state
+
+Latency to get down to ms....
+
+According to Mike Roberts at martinfowler.com\cite{MikeRoberts2016} the term \textit{serverless} is first mentioned in a\cite{Fromm2012}
+
+The term "Serverless" can have different meanings\cite{MikeRoberts2016} but this thesis will focus on Serveless functions also known as functions as a service (FaaS). Serverless functions are serverside code written in the form of functions that execute stateless in a virtualized cloud environment. 
+
+The top five cloud providers\cite{SynergyResearchGroup} all offers serveless functions as part of their services and the pricing model is similar; you pay for execution time of the function.
+
+\begin{itemize}
+\item Alibaba Function Compute\footnote{https://www.alibabacloud.com/product/function-compute} %2017
+\item Amazon Web Services Lambda\footnote{https://aws.amazon.com/lambda/} % 2014
+\item Google Cloud Functions\footnote{https://cloud.google.com/functions/} % 2016
+\item IBM Cloud Functions\footnote{https://www.ibm.com/cloud/functions}  % 2016?
+\item Microsoft Azure Functions\footnote{https://azure.microsoft.com/en-us/services/functions/} % 2016?
+\end{itemize}
+
+According to Synergy Reseach Groups "Market Share Trend", Amazon is the cloud provider with the largets market share; around 33 \% \cite{SynergyResearchGroup}.
+
+Amazons FaaS solution is called Lambda and was the first one launched in 2014 forestalling its opponents by several years. % Eventuellt dubbelkolla så att detta verkligen stämmer. 
+
+Another factor to bare in mind is that FaaS is often used in conjunction with other services that the cloud provider offers. In case of IBM, FaaS can access IBM Watson Apis.
+
+
+
+AWS
+% FaaS, -> lambda
+% Vi bör väl kort introducera stacken som vi tänkt utveckla på och vad som lett fram till vad vi vill undersöka.
+% AWS Lambda, Azure, Google, IBM....
+
+%----------------------------------------------------------------------------------------
+\subsubsection{AWS - Lambda}
+
+% -> Lambda orchestration, specifikt för AWS?....
+
+Lambda is AWS implementation of FaaS and is distinct from and should not be confused with Lambda Architecture\cite{Astakhov2015}. 
+
+%----------------------------------------------------------------------------------------
+\subsection{Orchastration of FaaS}
+
+% AWS Step Functions
+Input/Output limit, 32kb. https://docs.aws.amazon.com/step-functions/latest/dg/limits.html
+...
+
+\subsubsection{Amazon State Language}
+https://states-language.net/spec.html
+
+%----------------------------------------------------------------------------------------
+%	Research motivation
+%----------------------------------------------------------------------------------------
+\section{Research motivation}
+
+% Här beskriver vi varför detta arbete skulle kunna vara intressant
+% Extern validitet:
+% 1 - Något om frågeställningen kring iterationer
+% 2 - Sällanprogrammerare, en "enkel" modell för att skapa händelsekedjor
+
+
+The demand for software developers is increasing. According to a report by the EU commission \cite{}, EU will lack 1 000 000 programmers by 2020. More and more business areas are affected by digitalization \cite{} and it would be fair to say that the demand for infrequent developers will increase as well. \todo{Insert examples of infrequent developers}
+However, developing a software solution for a miner problem could often be easily done but being able to deploy and manage a secure software solution is often harder and will demand clear routines for updating both the runtime environment as well as the underlying systems. By trying to implement a much needed service in CoursePress experiences and conclusions can be drawn. Is functions as a service the way to go for infrequent developers? 
+
+
+...
+
+%----------------------------------------------------------------------------------------
+%	Aim and objectives
+%----------------------------------------------------------------------------------------
+\section{Aim and objectives}
+
+Taken from the problem context described in the prior section the aim of this research is presented here.
+
+% Create student -> Github flow
+% Evaluate the product solution
+% Reflect on the outcome
+
+
+%----------------------------------------------------------------------------------------
+\subsection{Aim of research}
+
+...
+
+%----------------------------------------------------------------------------------------
+\subsection{Objectives of research}
+
+...
+
+%----------------------------------------------------------------------------------------
+\subsection{Research questions}
+
+\begin{enumerate}
+\item RQ1 - Comparing iterations in AWS step...
+\item RQ2 - Is a serverless approach a good way for a team of infrequent programmers to...
+\end{enumerate}
+
+%----------------------------------------------------------------------------------------
+%	Restrictions
+%----------------------------------------------------------------------------------------
+\section{Restrictions}
+
+% Generealiserat så till vida att FaaS-lagret bör gå att implementera i andra tjänster. Problemet är väl att Step Functions är unikt för AWS men vi borde kunna applicera detta på liknande state machines
+
+...
+
+%----------------------------------------------------------------------------------------
+%	Thesis structure
+%----------------------------------------------------------------------------------------
+\section{Thesis structure}
+The structure of this thesis will be based upon "Portal of Research Methods and Methodologies for Research Projects and Degree Projects"\cite{Hakansson2013}. The authors philosophical assumptions (world view) was presented and ... bla bla bla
+
+...
